@@ -7,16 +7,16 @@
       <el-col :span="4" :offset="15">
         <el-link v-if="user.studentid===undefined " @click="login()">登录</el-link>
         <el-popover
-          v-else
-          placement="top-start"
-          title="个人中心"
-          width="200"
-          trigger="hover"
+            v-else
+            placement="top-start"
+            title="个人中心"
+            width="200"
+            trigger="hover"
         >
           <!--头部头像-->
           <!--          <el-avatar v-if="user.photo==null" :size="45" fit="fill" :src="circleUrl" slot="reference"></el-avatar>
                     <el-avatar v-else :size="45" fit="fill" :src="require('@/assets/imgs/'+user.photo)" slot="reference"></el-avatar>-->
-          <el-avatar  :size="45" fit="fill" :src="user.photo" slot="reference"></el-avatar>
+          <el-avatar :size="45" fit="fill" :src="user.photo" slot="reference"></el-avatar>
           <div class="grid-content bg-purple">
             <div class="block">
               <el-row>
@@ -28,19 +28,19 @@
               </el-row>
             </div>
             <div>
-              <span>学号：{{user.studentid}} </span>
+              <span>学号：{{ user.studentid }} </span>
             </div>
             <div>
-              <span>姓名：{{user.name}} </span>
+              <span>姓名：{{ user.name }} </span>
             </div>
-            <div >
+            <div>
               <span>性别:&nbsp; <span v-if="user.sex==0"> 男</span><span v-else> 女</span></span>
             </div>
             <div>
-              <span>学校：{{user.schoolName}} </span>
+              <span>学校：{{ user.schoolName }} </span>
             </div>
             <div>
-              <span>余额：{{user.money}} <span style="color: #42b983">花花币</span> </span>
+              <span>余额：{{ user.money }} <span style="color: #42b983">花花币</span> </span>
             </div>
             <div>
                 <span>状态:&nbsp;
@@ -50,10 +50,10 @@
             </div>
             <el-divider></el-divider>
             <div style="text-align: center">
-               <span >
-                   注册时间:{{user.registertime | dateFormat }}
+               <span>
+                   注册时间:{{ user.registertime | dateFormat }}
               </span>
-              <el-link @click="logout()"   type="primary">退出登录</el-link>
+              <el-link @click="logout()" type="primary">退出登录</el-link>
             </div>
           </div>
         </el-popover>
@@ -66,30 +66,30 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css';
-import axios from "axios";
+
 export default {
   name: "navHeader",
-  data(){
-    return{
-      fit:"scale-down",
+  data() {
+    return {
+      fit: "scale-down",
       circleUrl: "http://localhost:8080/Campus_Help/upload/942d99d7-1dd9-46ce-9278-94df86c98bad.jpg",
       formInline: {
         schoolId: '',
         taskType: ''
       },
 
-      user:{
-        stuid:"",
-        studentid:"",
-        password:"",
-        schoolid:"",
-        sex:"",
-        name:"",
-        registertime:"",
-        money:"",
-        state:"",
-        photo:"",
-        schoolName:"",
+      user: {
+        stuid: "",
+        studentid: "",
+        password: "",
+        schoolid: "",
+        sex: "",
+        name: "",
+        registertime: "",
+        money: "",
+        state: "",
+        photo: "",
+        schoolName: "",
       },
     }
   },
@@ -97,61 +97,34 @@ export default {
     this.getCurrentUser();
     this.getCurrentUserInfo();
   },
-//watch监听
-  //没登陆时，路由变化就跳转登录页面
-  /* watch:{
-     $route(to,from){//to:将要进入的路由对象 from：
-       if (this.user.studentid==null){
-         this.$router.push("/login");
-         this.$message.error("请先登录");
-       }
-     }
-   },*/
-  methods:{
+  methods: {
 
     //获取当前用户学号
-    getCurrentUser(){
+    getCurrentUser() {
       this.user.studentid = window.sessionStorage.getItem('currentUserId');
     },
-    getCurrentUserInfo(){
-      if (this.user.studentid!=''){
-        this.$http.get("user/getCurrentUser?studentid="+this.user.studentid).then((resp)=>{
-          if (resp.data.code!=100){
+    getCurrentUserInfo() {
+      if (this.user.studentid !== '') {
+        this.$http.get("user/getCurrentUser?studentid=" + this.user.studentid).then((resp) => {
+          if (resp.data.code !== 100) {
             console.log(resp.data.msg)
-          }else{
+          } else {
             this.user = resp.data.extend.user;
             this.user.schoolName = resp.data.extend.schoolName;
           }
         })
-      }else{
+      } else {
         this.$message.error("出错啦!!!")
       }
 
     },
-    logout(){
+    logout() {
       sessionStorage.removeItem("currentUserId");
       this.$router.push("/login")
     },
-    login(){
+    login() {
       this.$router.push("/login");
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     handleCommand(command) {
@@ -168,7 +141,7 @@ export default {
 </script>
 
 <style scoped>
-.navHeader{
+.navHeader {
   margin-top: 5px;
 
 }

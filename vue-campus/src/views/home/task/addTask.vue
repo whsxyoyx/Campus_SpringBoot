@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card  class="box-card">
+    <el-card class="box-card">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="任务标题" prop="taskname">
           <el-input v-model="ruleForm.taskname"></el-input>
@@ -16,14 +16,14 @@
               :on-remove="handleRemove"
               :on-change="handleChange"
               :before-remove="beforeRemove"
-               multiple
+              multiple
               :limit="6"
               :on-exceed="handleExceed"
               accept="image/png, image/jpeg"
               :file-list="fileList"
               list-type="picture-card">
             <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
-            <el-button  size="small" type="primary" @click="submitUpload">上传到服务器</el-button>
+            <el-button size="small" type="primary" @click="submitUpload">上传到服务器</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -36,7 +36,8 @@
         </el-form-item>
         <el-form-item style="width: 100%" label="任务类型" prop="tasktype">
           <el-select v-model="ruleForm.tasktype">
-            <el-option v-for="(item,index) in taskTypes" :key="index" :label="item.tasktype" :value="item.tasktype"></el-option>
+            <el-option v-for="(item,index) in taskTypes" :key="index" :label="item.tasktype"
+                       :value="item.tasktype"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="报酬" prop="reward">
@@ -56,13 +57,10 @@
     </el-card>
 
 
-
   </div>
 
 </template>
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
@@ -71,28 +69,28 @@ export default {
       dialogVisible: false,
 
       //用于文件上传
-      fileList:[],
-      urls:[],
+      fileList: [],
+      urls: [],
       //用于获取任务类型
-      taskTypes:[{
-        addtime:"",
-        tasktype:""
+      taskTypes: [{
+        addtime: "",
+        tasktype: ""
       }],
-      user:{
-        stuid:"",
-        studentid:"",
-        password:"",
-        schoolid:"",
-        sex:"",
-        name:"",
-        registertime:"",
-        money:"",
-        state:"",
-        photo:"",
-        schoolName:"",
+      user: {
+        stuid: "",
+        studentid: "",
+        password: "",
+        schoolid: "",
+        sex: "",
+        name: "",
+        registertime: "",
+        money: "",
+        state: "",
+        photo: "",
+        schoolName: "",
       },
       //用于提交到服务器
-      ruleForm:{
+      ruleForm: {
         taskid: "",
         publishUserId: "",
         publishUserName: "",
@@ -110,18 +108,18 @@ export default {
       //定义规则
       rules: {
         taskname: [
-          { required: true, message: '请输入任务标题', trigger: 'blur' },
-          { min: 2, max: 18, message: '长度在 2 到 18 个字符', trigger: 'blur' }
+          {required: true, message: '请输入任务标题', trigger: 'blur'},
+          {min: 2, max: 18, message: '长度在 2 到 18 个字符', trigger: 'blur'}
         ],
         taskcontext: [
-          { required: true, message: '请填写任务描述信息', trigger: 'change' },
-          { min: 2, max: 255, message: '长度在 2 到 255 个字符', trigger: 'blur' }
+          {required: true, message: '请填写任务描述信息', trigger: 'change'},
+          {min: 2, max: 255, message: '长度在 2 到 255 个字符', trigger: 'blur'}
         ],
         tasktype: [
-          { required: true, message: '请选择任务类型', trigger: 'change' }
+          {required: true, message: '请选择任务类型', trigger: 'change'}
         ],
         reward: [
-          { required: true, message: '请选择报酬', trigger: 'change' }
+          {required: true, message: '请选择报酬', trigger: 'change'}
         ],
       }
     };
@@ -149,9 +147,9 @@ export default {
         formData.append('file', file.raw)
       })
       //自定义的接口也可以用ajax或者自己封装的接口
-      this.$http.post("file/upload",formData).then(res => {
-        if (res.data.code == 100) {
-          this.urls=res.data.extend.url;
+      this.$http.post("file/upload", formData).then(res => {
+        if (res.data.code === 100) {
+          this.urls = res.data.extend.url;
           this.$message.success('上传成功');
         } else {
           this.$message.error('上传失败');
@@ -164,22 +162,6 @@ export default {
     handleChange(file, fileList) {
       this.fileList = fileList
     },
-
-    //限制上传jpg|png格式的文件并且每张大小不超过2MB  :before-upload="beforeAvatarUpload"
-   /* beforeAvatarUpload(file) {
-      alert("你好")
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      const isJPG = file.type === 'image/jpeg'||file.type === 'image/png';
-      if (!isJPG) {
-        this.$message.error('上传图片只能是 JPG|PNG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传的每张图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },*/
-
-
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -192,8 +174,8 @@ export default {
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 6 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
+    beforeRemove(file) {
+      return this.$confirm(`确定移除 ${file.name}？`);
     },
 
 
@@ -201,27 +183,27 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-           //this.submitUpload();
-          console.log("文件urls",this.urls)
-           for (let i=0;i<this.urls.length;i++){
-             if(i<this.urls.length-1){
-               this.ruleForm.img+=(this.urls[i]+" ");
-             }else{
-               this.ruleForm.img+=this.urls[i];
-             }
-           }
-           console.log("img",this.ruleForm.img);
+          //this.submitUpload();
+          console.log("文件urls", this.urls)
+          for (let i = 0; i < this.urls.length; i++) {
+            if (i < this.urls.length - 1) {
+              this.ruleForm.img += (this.urls[i] + " ");
+            } else {
+              this.ruleForm.img += this.urls[i];
+            }
+          }
+          console.log("img", this.ruleForm.img);
 
           console.log(this.ruleForm)
-          this.$http.post("task/addTask",this.ruleForm).then((resp)=>{
-            if (resp.data.code===100){
+          this.$http.post("task/addTask", this.ruleForm).then((resp) => {
+            if (resp.data.code === 100) {
               this.$router.push("/home/center")
               this.$message({
                 type: 'success',
                 message: resp.data.msg,
               });
-              this.ruleForm={}
-            }else{
+              this.ruleForm = {}
+            } else {
               this.$message({
                 type: 'error',
                 message: resp.data.msg,
@@ -234,35 +216,32 @@ export default {
       });
     },
     //查询所有任务类型
-    getAllTaskType(){
-      let _this=this;
-      this.$http.get("task/getAllTaskType").then((resp)=>{
-        this.taskTypes=resp.data.extend.taskTypes;
-        console.log(_this.taskTypes);
+    getAllTaskType() {
+      this.$http.get("task/getAllTaskType").then((resp) => {
+        this.taskTypes = resp.data.extend.taskTypes;
       })
 
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    getCurrentUser(){
+    getCurrentUser() {
       this.user.studentid = window.sessionStorage.getItem('currentUserId');
     },
-    getCurrentUserInfo(){
-      if (this.user.studentid!=''){
-        this.$http.get("user/getCurrentUser?studentid="+this.user.studentid).then((resp)=>{
-          if (resp.data.code!=100){
-            console.log(resp.data.msg)
-          }else{
+    getCurrentUserInfo() {
+      if (this.user.studentid !== '') {
+        this.$http.get("user/getCurrentUser?studentid=" + this.user.studentid).then((resp) => {
+          if (resp.data.code !== 100) {
+          } else {
             this.user = resp.data.extend.user;
             this.user.schoolName = resp.data.extend.schoolName;
-            this.ruleForm.publishSchoolId=this.user.schoolid
-            this.ruleForm.publishUserName=this.user.name
-            this.ruleForm.publishUserId=this.user.stuid
-            this.ruleForm.state=0
+            this.ruleForm.publishSchoolId = this.user.schoolid
+            this.ruleForm.publishUserName = this.user.name
+            this.ruleForm.publishUserId = this.user.stuid
+            this.ruleForm.state = 0
           }
         })
-      }else{
+      } else {
         this.$message.error("出错啦!!!")
       }
     },
@@ -271,7 +250,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.box-card{
+.box-card {
   width: 650px;
 }
 </style>

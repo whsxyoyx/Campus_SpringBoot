@@ -42,14 +42,14 @@
                 <span>姓名：{{publicUserInfo.name}} </span>
               </div>
               <div >
-                <span>性别:&nbsp; <span v-if="user.sex==0"> 男</span><span v-else> 女</span></span>
+                <span>性别:&nbsp; <span v-if="user.sex===0"> 男</span><span v-else> 女</span></span>
               </div>
               <div>
                 <span>学校：{{publicUserInfo.schoolName}} </span>
               </div>
               <div>
                 <span>状态:&nbsp;
-                  <el-tag size="medium" type="success" v-if="publicUserInfo.state==0">良好</el-tag>
+                  <el-tag size="medium" type="success" v-if="publicUserInfo.state===0">良好</el-tag>
                   <el-tag size="medium" type="danger" v-else>被限制</el-tag>
                 </span>
               </div>
@@ -70,9 +70,6 @@
               <el-image v-if="img.length>10" style="width: 90%;height: 90%" :src="img" lazy></el-image>
               <!--              <el-button v-else type="primary">YYYYYYY</el-button>-->
             </div>
-            <!--
-                      <el-image v-if="images !==undefined && images.length > 0" v-for="img in images" style="width: 90%;height: 90%" :src="img"></el-image>
-            -->
           </div>
         </div>
         <el-divider></el-divider>
@@ -88,7 +85,6 @@
     <el-card class="box-card" style="margin-top: 20px">
       <span>评论</span>
       <div style="margin: 10px 50px 0px 50px;">
-<!--     @keyup.enter.native="submitComment"即可以提交评论   -->
         <el-input
             @keyup.enter.native="submitComment"
             type="textarea"
@@ -138,13 +134,6 @@
                           <div  v-else>{{reply.userName}}<span> 回复 </span><span style="color: #42b983">@{{item.username}}</span></div>
                           <div  style="font-size: 2px;color: #666"> {{reply.createtime | dateFormat}}</div>
                            <div style="margin:10px  10px;color: salmon">{{reply.content}}</div>
-<!--
-                          <div>
-                            <el-button type="text" @click="twoLevelReply(reply.commonId,reply.username)">回复</el-button>
-                          </div>
--->
-
-  <!--                    <div><span>{{reply.content}}</span></div>-->
                        </div>
                       </div>
                     </div>
@@ -278,7 +267,7 @@ export default {
     //二级提交回复内容
     twoLevelReplySubmit(){
       this.$http.post("replyComment/saveReply",this.replyComment).then((resp)=>{
-        if (resp.data.code==100){
+        if (resp.data.code===100){
           this.dialogTableVisible  = false;
           this.loadComment();
           this.$message.success("评论成功")
@@ -315,7 +304,7 @@ export default {
     //一级提交回复内容
     replySubmit(){
       this.$http.post("comment/saveReply",this.replyComment).then((resp)=>{
-        if (resp.data.code==100){
+        if (resp.data.code===100){
           this.dialogTableVisible  = false;
           this.loadComment();
           this.$message.success("评论成功")
@@ -335,7 +324,7 @@ export default {
     loadComment(){
       //alert(this.taskLists.taskid)
       this.$http.get("comment/getComment/"+this.taskLists.taskid).then((resp)=>{
-        if (resp.data.code==100){
+        if (resp.data.code===100){
           console.log("当前任务评论json数据：",resp.data.extend.comments);
           this.comments=resp.data.extend.comments;
         }else{
@@ -348,13 +337,12 @@ export default {
     },
     //一级评论功能
     submitComment(){
-      //this.$message.error("该功能还在开发中，请敬请期待");
       this.comment.userId=this.user.stuid;
       this.comment.username=this.user.name;
       this.comment.img=this.user.photo;
       this.comment.taskId=this.taskLists.taskid;
       this.$http.post("comment/save",this.comment).then((resp)=>{
-         if (resp.data.code==100){
+         if (resp.data.code===100){
            this.$message.success("评论成功")
            this.loadComment();
            this.comment={};
@@ -383,21 +371,15 @@ export default {
         let info = decodeURIComponent(this.$route.query.taskInfo);
         this.taskLists= JSON.parse(info);
         console.log("---",this.taskLists);
-        if(this.taskLists.reward==0){
+        if(this.taskLists.reward===0){
           this.disabled=true;
         }
       }
-      /*   bus.$on("taskInfo",(item)=>{
-           this.taskLists=item
-           console.log("--->",this.taskLists)
-         })*/
     },
     getPublicUserInfo(){
       this.$http.get("user/getCurrentUser/"+this.taskLists.publishUserId).then((resp)=>{
         this.publicUserInfo=resp.data.extend.publicUser
         this.publicUserInfo.schoolName = resp.data.extend.schoolName;
-
-        console.log("---->>>>>>>>",this.publicUserInfo)
       })
     },
     getCurrentUser(){
@@ -405,9 +387,9 @@ export default {
       console.log("this.user.studentid",this.user.studentid)
     },
     getCurrentUserInfo(){
-      if (this.user.studentid!=''){
+      if (this.user.studentid!==''){
         this.$http.get("user/getCurrentUser?studentid="+this.user.studentid).then((resp)=>{
-          if (resp.data.code!=100){
+          if (resp.data.code!==100){
             console.log(resp.data.msg)
           }else{
             this.user = resp.data.extend.user;
@@ -419,16 +401,13 @@ export default {
       }
 
     },
-
-
     //接受任务
     acceptTask(){
       console.log(this.taskLists)
       this.$http.put("task/taskAccept",
           {aId: this.user.stuid,taskId: this.taskLists.taskid}
       ).then((resp)=>{
-        if (resp.data.code!=100){
-          console.log(resp.data.msg)
+        if (resp.data.code!==100){
           this.$message({
             type: 'error',
             message: resp.data.msg,

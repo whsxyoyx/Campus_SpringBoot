@@ -44,9 +44,6 @@
 .el-submenu .el-menu-item{
   text-align:center;
 }
-/*.el-aside::-webkit-scrollbar {
-  display: none;
-}*/
 </style>
 
 <script>

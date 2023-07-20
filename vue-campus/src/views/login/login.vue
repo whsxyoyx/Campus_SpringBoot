@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Register from "./register";
 
 export default {
@@ -98,7 +97,7 @@ export default {
             +encodeURIComponent(this.loginForm.password)).then((resp)=>{
             console.log(resp.data.msg);
             //注册成功后路由携带用户信息到首页
-            if (resp.data.code==100){
+            if (resp.data.code===100){
 
               window.sessionStorage.setItem('currentUserId',this.loginForm.studentid);
 
@@ -139,11 +138,6 @@ export default {
     resetLoginForm(formName) {
       this.$refs[formName].resetFields();
     },
-
-  /*  //路由携带数据到首页
-    bringData(){
-      this.$router.push();
-    }*/
   }
 }
 

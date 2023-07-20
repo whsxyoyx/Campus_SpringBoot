@@ -31,7 +31,6 @@ public class DailyController {
         Integer stuid = daily.getUser().getStuid();
         PageInfo<Daily> pageInfo = new PageInfo<Daily>(list);
         return Msg.success().add("list",pageInfo).add("sid",stuid);
-
     }
     //根据id查询日志信息
     @RequestMapping("/getDaily/{id}")

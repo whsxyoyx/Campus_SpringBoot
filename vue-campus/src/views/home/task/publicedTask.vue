@@ -7,20 +7,6 @@
       <el-table
         :data="tableData"
         style="width: 100%">
-<!--        <el-table-column
-          prop="taskid"
-          align="center"
-          label="任务编号"
-          width="63"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="publishUserId"
-          align="center"
-          label="发布者id"
-          width="63"
-        >
-        </el-table-column>-->
         <el-table-column
           prop="publishUserName"
           align="center"
@@ -300,8 +286,7 @@ export default {
   created() {
     this.getCurrentUser()
     this.getCurrentUserInfo()
-    setTimeout(()=>{
-      this.showCurrentPage()},100)
+    setTimeout(this.showCurrentPage,500)
     this.getAllTaskType()
   },
   methods: {

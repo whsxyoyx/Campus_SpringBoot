@@ -5,6 +5,9 @@ server:
     #http://localhost:8888/api/XXXXXX
     context-path: /api
 spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
   mvc:
     hiddenmethod:
       filter:

@@ -16,8 +16,6 @@
                 <el-button type="primary" class="login-button"  native-type="submit"  @click="submitForm('ruleForm')" :disabled="ruleForm.account==''&&ruleForm.password==''" :loading="loginState">登录</el-button>
                  <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
-
-
         </el-form>
     </div>
 
@@ -25,8 +23,6 @@
 </template>
 
 <script>
-
-import axios from "axios";
 
 export default {
     data(){
@@ -48,13 +44,13 @@ export default {
     },
     methods:{
         submitForm(formName){
-          this.$refs[formName].validate((valid) => {
+          this.$refs[formName].validate(valid => {
             if (valid) {
               this.loginState=true;
               this.$http.get("admin/adminlogin?account="+this.ruleForm.account+
                   "&password="+encodeURIComponent(this.ruleForm.password)).then((resp)=>{
                 this.loginState=false;
-                if(resp.data.code==100){
+                if(resp.data.code === 100){
                   window.sessionStorage.setItem('currentAdminAccount',this.ruleForm.account);
                   //push跳转页面
                   this.$router.push("/home/index");
@@ -85,7 +81,6 @@ export default {
       resetForm(formName){
         this.$refs[formName].resetFields();
       },
-
     }
 }
 </script>

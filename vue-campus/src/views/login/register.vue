@@ -48,7 +48,7 @@ import axios from "axios";
 export default {
   name: "register",
   data(){
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
@@ -58,8 +58,8 @@ export default {
         callback();
       }
     };
-    var validatePass2 = (rule, value, callback) => {
-      if (value =='') {
+    const validatePass2 = (rule, value, callback) => {
+      if (value === '') {
         callback(new Error('请再次输入密码'));
       } else if (value !== this.ruleForm.pass) {
         callback(new Error('两次输入密码不一致!'));
@@ -67,7 +67,7 @@ export default {
         callback();
       }
     };
-    var validUsername = (rule, value, callback) => {
+    const validUsername = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入用户名"));
       } else if (!this.isvalidUsername(value)) {
@@ -81,7 +81,7 @@ export default {
       }
     };
 
-    var validUserId = (rule, value, callback) => {
+    const validUserId = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入用户名"));
       } else if (!this.isvalidUserId(value)) {
@@ -94,7 +94,7 @@ export default {
         callback();
       }
     };
-    var validateSchool = (rule, value, callback) => {
+    const validateSchool = (rule, value, callback) => {
       if (this.schools.schoolid ===undefined) {
         callback(new Error('请选择学院'));
       }else {
@@ -178,19 +178,19 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         // alert(valid)
         if (valid) {
-          if (this.ruleForm.sex=="男"|this.ruleForm.sex==0){
+          if (this.ruleForm.sex==="男"|this.ruleForm.sex===0){
             this.ruleForm.sex=0;
-          }else if (this.ruleForm.sex=="女"|this.ruleForm.sex==1){
+          }else if (this.ruleForm.sex==="女"|this.ruleForm.sex===1){
             this.ruleForm.sex=1;
           }
           let params={sex:this.ruleForm.sex,studentid:this.ruleForm.studentid,password:this.ruleForm.pass,name:this.ruleForm.name,schoolid:this.schools.schoolid};
           console.log(params)
           this.$http.post("user/register",params).then((resp)=>{
 
-            if (resp.data.code !=100 ){
-                if (this.ruleForm.sex=="0"){
+            if (resp.data.code !==100 ){
+                if (this.ruleForm.sex==="0"){
                   this.ruleForm.sex="男";
-                }else if (this.ruleForm.sex=='1'){
+                }else if (this.ruleForm.sex==='1'){
                   this.ruleForm.sex="女";
                 }
                 this.$message({
@@ -222,10 +222,8 @@ export default {
 
     //注册前查询所有学校
     getAllSchool(){
-      let _this=this;
       this.$http.get("admin/getAllSchool").then((resp)=>{
-        _this.schools=resp.data.extend.schoolList;
-        console.log(_this.schools);
+        this.schools=resp.data.extend.schoolList;
 
       })
     },

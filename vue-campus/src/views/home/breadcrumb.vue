@@ -54,7 +54,6 @@ export default {
   watch: {
     $route: function (newVal) {
       this.geBreadcrumbItems(newVal);
-      console.log(this.breadcrumbItems)
     },
   },
 };

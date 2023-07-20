@@ -172,6 +172,7 @@ public class TaskController {
 		}
 		user.setMoney(user.getMoney()-task.getReward());
 		task.setAddtime(new Date());
+		task.setEndtime(new Date());
 		task.setAcceptUserId(0);
 		System.out.println("---》"+task.getImg());
 		if(task.getImg()==""){
