@@ -10,10 +10,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class PxCampusSpringBootApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context =SpringApplication.run(PxCampusSpringBootApplication.class, args);
-        System.out.println("test");
-        String property = context.getEnvironment().getProperty("server.port");
-        System.out.println(property);
+       SpringApplication.run(PxCampusSpringBootApplication.class, args);
     }
-
 }
