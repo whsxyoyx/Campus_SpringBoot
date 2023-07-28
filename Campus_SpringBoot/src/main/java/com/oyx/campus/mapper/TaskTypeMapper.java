@@ -16,8 +16,8 @@ public interface TaskTypeMapper {
      * */
     @Update("""
             update `tasktype`
-            set tasktype = #{name}
-            where tasktype = #{tasktype}
+            set tasktype = #{tasktype}
+            where tasktype = #{name}
             """)
     int updateTaskType(String tasktype,String name);
 
@@ -41,7 +41,7 @@ public interface TaskTypeMapper {
     * 查询所有任务类型
     * */
     @Select("""
-            select * from `tasktype`
+            select * from tasktype ORDER BY addtime desc
             """)
     @ResultType(TaskType.class)
     List<TaskType> selectAllTaskType();

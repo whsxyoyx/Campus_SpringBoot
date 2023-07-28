@@ -1,0 +1,18 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+li{
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: #333;
+}
+/*基础样式表*/
+html,body,#app{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}

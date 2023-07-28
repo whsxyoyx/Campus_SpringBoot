@@ -18,44 +18,45 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class FileController {
 
-	// 设置固定的日期格式
-  /*  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");*/
+    // 设置固定的日期格式
+    /*  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");*/
 
     // 日志打印
     private Logger log = LoggerFactory.getLogger("FileController");
+
     // 文件上传 （可以多文件上传）
     @PostMapping("/upload")
     public Msg fileUploads(HttpServletRequest request, @RequestParam("file") MultipartFile[] file) throws IOException {
-        System.out.println("图片个数："+file.length);
-        String[] url=new String[file.length];
-        int i=0;
-        //循环保存文件
+        System.out.println("图片个数：" + file.length);
+        String[] url = new String[file.length];
+        int i = 0;
+        // 循环保存文件
         for (MultipartFile f : file) {
             // 获取上传的文件名称
             String originName = f.getOriginalFilename();
-            //指定图片存放路径
-            String realPath=request.getServletContext().getRealPath("/")+"upload";
-            System.out.println("存放图片路径的realPath为>>>>>>"+realPath);
-            //给图片重命名
+            // 指定图片存放路径
+            String realPath = request.getServletContext().getRealPath("/") + "upload";
+            System.out.println("存放图片路径的realPath为>>>>>>" + realPath);
+            // 给图片重命名
             String hz = originName.substring(originName.lastIndexOf("."));
             String uuid = UUID.randomUUID().toString();
-            String newName=uuid+hz;
-            //这里使用文件上传工具类实现上传
+            String newName = uuid + hz;
+            // 这里使用文件上传工具类实现上传
             if (FileUtils.upload(f, realPath, newName)) {
                 // 打印日志
-                log.info("上传成功，当前上传的文件保存在 {}",realPath);
-               if(i<file.length){
-                   url[i]=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+ request.getContextPath()+"/upload/"+newName;
-                   System.out.println("url"+i+":"+url[i].toString());
-                   i++;
-               }
+                log.info("上传成功，当前上传的文件保存在 {}", realPath);
+                if (i < file.length) {
+                    url[i] = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/" + newName;
+                    System.out.println("url" + i + ":" + url[i].toString());
+                    i++;
+                }
 
-            }else{
+            } else {
                 return Msg.fail("上传错误");
             }
         }
         // 自定义返回的统一的 JSON 格式的数据，可以直接返回这个字符串也是可以的。
-        return Msg.success("上传成功").add("url",url);
+        return Msg.success("上传成功").add("url", url);
     }
 
    /* @RequestMapping("/test/upload")

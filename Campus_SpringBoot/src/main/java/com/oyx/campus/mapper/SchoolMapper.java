@@ -55,7 +55,7 @@ public interface SchoolMapper {
     * 查询所有学校
     * */
     @Select("""
-            select * from `school`
+            select * from `school` ORDER BY addtime desc
             """)
     @ResultType(School.class)
     List<School> selectAllSchool();
