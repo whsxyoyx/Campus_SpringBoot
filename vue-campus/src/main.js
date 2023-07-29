@@ -10,7 +10,7 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false
 
 /*axios全局配置*/
-axios.defaults.baseURL = 'http://localhost:8888/api/'
+axios.defaults.baseURL = 'http://localhost:9999/api/'
 Vue.prototype.$http = axios
 
 //配置的全局过滤器

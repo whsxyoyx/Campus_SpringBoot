@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -29,13 +30,17 @@ public class FileController {
     public Msg fileUploads(HttpServletRequest request, @RequestParam("file") MultipartFile[] file) throws IOException {
         System.out.println("图片个数：" + file.length);
         String[] url = new String[file.length];
+        // 指定图片存放路径
+        String realPath = request.getServletContext().getRealPath("/") + "upload";
+        File file1 = new File(realPath);
+        if(!file1.exists()){
+            file1.mkdirs();
+        }
         int i = 0;
         // 循环保存文件
         for (MultipartFile f : file) {
             // 获取上传的文件名称
             String originName = f.getOriginalFilename();
-            // 指定图片存放路径
-            String realPath = request.getServletContext().getRealPath("/") + "upload";
             System.out.println("存放图片路径的realPath为>>>>>>" + realPath);
             // 给图片重命名
             String hz = originName.substring(originName.lastIndexOf("."));
