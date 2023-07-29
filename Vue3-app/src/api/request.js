@@ -4,7 +4,7 @@ const useStore = useUserStore();
 
 export function request(config){
   const instance = axios.create({
-    baseURL: 'http://localhost:8888/api/',
+    baseURL: 'http://localhost:9999/api/',
     timeout: 5000,
   });
   //配置请求拦截器
